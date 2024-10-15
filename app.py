@@ -26,7 +26,6 @@ def index():
         url = "https://universe.leagueoflegends.com/fr_FR/story/champion/" + champion_name
         
         try:
-            driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
             driver.get(url)
 
             time.sleep(3)
