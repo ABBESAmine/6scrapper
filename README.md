@@ -1,5 +1,4 @@
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=900&size=42&pause=1000&center=true&vCenter=true&width=435&lines=6scrapper)](https://git.io/typing-svg)
-
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=50&pause=1000&center=true&vCenter=true&width=435&lines=6scrapper+by+AMINE)](https://git.io/typing-svg)
 
 # League of Legends Champion Biography Scraper
 
