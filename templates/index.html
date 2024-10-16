@@ -1,26 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scraping d'une page Web</title>
+    <title>Récupération des biographies</title>
 </head>
 <body>
-    <h1>Entrez une URL pour récupérer tout le HTML de la page</h1>
-    
-    <form method="POST">
-        <label for="name">Nom d'un champion :</label>
-        <input type="text" id="name" name="name" required>
-        <button type="submit">Scraper</button>
+    <h1>Récupération des biographies des champions</h1>
+
+    <form action="/" method="post">
+        <input type="text" name="name" placeholder="Nom du champion" required>
+        <button type="submit">Récupérer la biographie</button>
     </form>
 
-    <a href="/download" download>
-        <button>Télécharger le fichier JSON</button>
-    </a>
+    <form action="/launch" method="get">
+        <button type="submit">Launch</button>
+    </form>
 
-    <p>{{ get_flashed_messages()[0] }}</p>
-
-      
+    {% if html_content %}
+        <p>{{ html_content }}</p>
+    {% endif %}
 </body>
 </html>
