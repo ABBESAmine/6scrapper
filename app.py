@@ -13,7 +13,7 @@ app = Flask(__name__)
 
 # Configuration de Selenium pour utiliser Chrome
 options = Options()
-options.add_argument("--headless") 
+#options.add_argument("--headless") 
 options.add_argument("--disable-gpu")
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
@@ -26,7 +26,7 @@ def init_driver():
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        champion_name = request.form['name'].strip().lower().replace(" ", "")
+        champion_name = request.form['name'].strip().lower().replace(" ", "").replace(".", "").replace("é", "e").replace("î", "i")
         url = "https://universe.leagueoflegends.com/fr_FR/story/champion/" + champion_name
         
         try:
