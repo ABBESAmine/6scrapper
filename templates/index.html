@@ -9,9 +9,15 @@
 <body>
     <h1>League of Legends Biography Scraper</h1>
 
-    <form id="scrapeForm" method="POST">
+    {# <form id="scrapeForm" method="POST">
         <label for="name">Nom du Champion :</label>
         <input type="text" id="name" name="name" required>
+        <button type="submit">Récupérer la biographie</button>
+    </form> #}
+
+    <form action="/" method="post" id="scrapeForm">
+        <label for="name">Nom du Champion :</label>
+        <input type="text" name="name" id="name" placeholder="Nom du champion" required>
         <button type="submit">Récupérer la biographie</button>
     </form>
 

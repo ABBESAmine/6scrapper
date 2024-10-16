@@ -65,6 +65,11 @@ def scrape_and_store_biography(champion_name, driver):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    driver = init_driver()
+    if request.method == 'POST':
+        champion = request.form['name']
+        scrape_and_store_biography(champion, driver)
+
     return render_template('index.html')
 
 # Route SSE pour envoyer la progression du scraping
