@@ -53,25 +53,12 @@ pip install flask selenium webdriver_manager beautifulsoup4 lxml
 Clonez ce dépôt GitHub sur votre machine locale :
 
 ```bash
-git clone https://github.com/votre-utilisateur/votre-depot.git
+git clone https://github.com/ABBESAmine/6scrapper
 cd votre-depot
 ```
 
-### Étape 2 : Ajouter le fichier champions.json
 
-Assurez-vous d'avoir un fichier `champions.json` dans le même répertoire que `app.py`. Ce fichier doit contenir la liste des noms des champions de League of Legends dans le format suivant :
-
-```json
-[
-    "Aatrox",
-    "Ahri",
-    "Akali",
-    "Akshan",
-    ...
-]
-```
-
-### Étape 3 : Lancer l'application
+### Étape 2 : Lancer l'application
 
 Dans le répertoire du projet, exécutez la commande suivante pour démarrer l'application Flask :
 
@@ -81,7 +68,7 @@ python app.py
 
 L'application sera accessible à l'adresse suivante : [http://127.0.0.1:5000/](http://127.0.0.1:5000/)
 
-### Étape 4 : Utilisation de l'application
+### Étape 3 : Utilisation de l'application
 
 - **Page d'accueil** : Entrez le nom d'un champion dans le champ de texte et cliquez sur "Récupérer la biographie". Cela récupérera la biographie du champion et l'enregistrera dans `bio.json`.
 
@@ -89,7 +76,7 @@ L'application sera accessible à l'adresse suivante : [http://127.0.0.1:5000/](h
 
 - **Téléchargement du fichier JSON** : Une fois les biographies récupérées, vous pouvez télécharger le fichier `bio.json` en cliquant sur le bouton de téléchargement.
 
-### Étape 5 : Télécharger les biographies
+### Étape 4 : Télécharger les biographies
 
 Lorsque les biographies sont récupérées avec succès, vous pouvez les télécharger en visitant cette URL : [http://127.0.0.1:5000/download](http://127.0.0.1:5000/download).
 
