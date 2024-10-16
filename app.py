@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, jsonify, send_file, Response
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
@@ -13,7 +13,7 @@ app = Flask(__name__)
 
 # Configuration de Selenium pour utiliser Chrome
 options = Options()
-#options.add_argument("--headless") 
+options.add_argument("--headless")
 options.add_argument("--disable-gpu")
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
@@ -23,101 +23,92 @@ options.add_argument("--window-size=1920x1080")
 def init_driver():
     return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
+# Fonction commune pour scraper et stocker la biographie
+def scrape_and_store_biography(champion_name, driver):
+    try:
+        # Nettoyage du nom du champion pour correspondre à l'URL
+        champion_name_clean = champion_name.strip().lower().replace(" ", "").replace("'", "").replace(".", "").replace("é", "e").replace("î", "i")
+        url = f"https://universe.leagueoflegends.com/fr_FR/story/champion/{champion_name_clean}"
+
+        driver.get(url)
+        time.sleep(3)  # Attendre que la page se charge
+
+        div = driver.find_element(By.ID, "CatchElement")
+        contenu_div = div.get_attribute('innerHTML')
+        soup = BeautifulSoup(contenu_div, 'html.parser')
+        texte_propre = soup.get_text()
+
+        new_entry = {"personnage": champion_name_clean, "biographie": texte_propre}
+
+        # Tente de lire les données existantes dans bio.json
+        if os.path.exists("bio.json"):
+            with open("bio.json", "r", encoding="utf-8") as json_file:
+                try:
+                    data = json.load(json_file)
+                except json.JSONDecodeError:
+                    data = []
+        else:
+            data = []
+
+        # Ajouter la nouvelle entrée à la liste des données
+        data.append(new_entry)
+
+        # Écrire les données accumulées dans le fichier JSON
+        with open("bio.json", "w", encoding="utf-8") as json_file:
+            json.dump(data, json_file, ensure_ascii=False, indent=4)
+
+        return champion_name_clean
+
+    except Exception as e:
+        print(f"Erreur lors du scraping du champion {champion_name}: {str(e)}")
+        return None
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    if request.method == 'POST':
-        champion_name = request.form['name'].strip().lower().replace(" ", "").replace(".", "").replace("é", "e").replace("î", "i")
-        url = "https://universe.leagueoflegends.com/fr_FR/story/champion/" + champion_name
-        
-        try:
-            driver = init_driver()
-            driver.get(url)
+    return render_template('index.html')
 
-            # Attendre que le contenu soit chargé
-            time.sleep(3)
+# Route SSE pour envoyer la progression du scraping
+@app.route('/progress')
+def progress():
+    def generate():
+        driver = init_driver()
 
-            # Récupérer la div avec l'ID "CatchElement"
-            div = driver.find_element(By.ID, "CatchElement")
-            contenu_div = div.get_attribute('innerHTML')
+        if not os.path.exists("champions.json"):
+            yield "data: Le fichier champions.json est introuvable\n\n"
+            return
 
-            # Nettoyer le contenu HTML avec BeautifulSoup
-            soup = BeautifulSoup(contenu_div, 'html.parser')
-            texte_propre = soup.get_text()
-
-            # Gérer le stockage des données dans bio.json
-            personnage = url.split('/')[-1]
-            new_entry = {"personnage": personnage, "biographie": texte_propre}
-
-            # Tente de lire les données existantes dans bio.json
-            if os.path.exists("bio.json"):
-                with open("bio.json", "r", encoding="utf-8") as json_file:
-                    try:
-                        data = json.load(json_file)
-                    except json.JSONDecodeError:
-                        data = []
-            else:
-                data = []
-
-            # Ajouter la nouvelle entrée à la liste des données
-            data.append(new_entry)
-
-            # Écrire les données accumulées dans le fichier JSON
-            with open("bio.json", "w", encoding="utf-8") as json_file:
-                json.dump(data, json_file, ensure_ascii=False, indent=4)
-
-            driver.quit()
-
-        except Exception as e:
-            contenu_div = f"Une erreur est survenue : {str(e)}"
-
-    return render_template('index.html', html_content=None)
-
-@app.route('/launch')
-def launch():
-    try:
-        # Lire le fichier JSON pour obtenir tous les noms des champions
         with open("champions.json", "r") as file:
             champions = json.load(file)
 
-        driver = init_driver()
+        if not champions:
+            yield "data: La liste des champions est vide\n\n"
+            return
+
         for champion_name in champions:
-            champion_name_clean = champion_name.strip().lower().replace(" ", "").replace("'", "").replace(".", "").replace("é", "e").replace("î", "i")
-            url = f"https://universe.leagueoflegends.com/fr_FR/story/champion/{champion_name_clean}"
-
-            driver.get(url)
-            time.sleep(3)  # Attendre que la page se charge
-
-            div = driver.find_element(By.ID, "CatchElement")
-            contenu_div = div.get_attribute('innerHTML')
-            soup = BeautifulSoup(contenu_div, 'html.parser')
-            texte_propre = soup.get_text()
-            personnage = champion_name_clean
-
-            new_entry = {"personnage": personnage, "biographie": texte_propre}
-
-            # Tente de lire les données existantes dans bio.json
-            if os.path.exists("bio.json"):
-                with open("bio.json", "r", encoding="utf-8") as json_file:
-                    try:
-                        data = json.load(json_file)
-                    except json.JSONDecodeError:
-                        data = []
+            scraped_champion = scrape_and_store_biography(champion_name, driver)
+            if scraped_champion:
+                yield f"data: {scraped_champion}\n\n"
             else:
-                data = []
-
-            data.append(new_entry)
-
-            # Écrire les données accumulées dans le fichier JSON
-            with open("bio.json", "w", encoding="utf-8") as json_file:
-                json.dump(data, json_file, ensure_ascii=False, indent=4)
+                yield f"data: Erreur lors du scraping de {champion_name}\n\n"
 
         driver.quit()
 
-        return render_template('index.html', html_content="Toutes les biographies ont été récupérées avec succès.")
+    return Response(generate(), mimetype='text/event-stream')
 
-    except Exception as e:
-        return render_template('index.html', html_content=f"Une erreur est survenue : {str(e)}")
+# Route pour afficher les champions récupérés
+@app.route('/get_scraped_champions')
+def get_scraped_champions():
+    if os.path.exists("bio.json"):
+        with open("bio.json", "r", encoding="utf-8") as json_file:
+            try:
+                data = json.load(json_file)
+                champions = [entry["personnage"] for entry in data]
+                return jsonify(champions)
+            except json.JSONDecodeError:
+                return jsonify([])
+    return jsonify([])
 
+# Route pour télécharger le fichier bio.json
 @app.route('/download')
 def download_file():
     if os.path.exists("bio.json"):
@@ -125,4 +116,4 @@ def download_file():
     return "Fichier non trouvé", 404
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, threaded=True)

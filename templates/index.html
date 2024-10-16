@@ -1,24 +1,78 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Récupération des biographies</title>
+    <title>League of Legends Biography Scraper</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <h1>Récupération des biographies des champions</h1>
+    <h1>League of Legends Biography Scraper</h1>
 
-    <form action="/" method="post">
-        <input type="text" name="name" placeholder="Nom du champion" required>
+    <form id="scrapeForm" method="POST">
+        <label for="name">Nom du Champion :</label>
+        <input type="text" id="name" name="name" required>
         <button type="submit">Récupérer la biographie</button>
     </form>
 
-    <form action="/launch" method="get">
-        <button type="submit">Launch</button>
-    </form>
+    <button id="launchScraper">Lancer pour tous les champions</button>
+    <a href="/download" class="btn-download" download>
+        <button type="button">Télécharger le fichier bio.json</button>
+    </a>
 
-    {% if html_content %}
-        <p>{{ html_content }}</p>
-    {% endif %}
+    <h2>Statut du Scraping :</h2>
+    <div id="scrapingStatus"></div>
+
+    <h2>Biographies récupérées :</h2>
+    <ol id="championList"></ol>
+
+    <script>
+        // Gestion de l'envoi du formulaire pour récupérer la biographie d'un seul champion
+        $('#scrapeForm').on('submit', function(event) {
+            event.preventDefault();  // Empêche le rechargement de la page
+
+            var championName = $('#name').val();  // Récupère le nom du champion
+            $('#scrapingStatus').html('Récupération de la biographie pour ' + championName + '...');
+
+            // Effectuer une requête AJAX pour récupérer la biographie
+            $.post('/', { name: championName }, function(response) {
+                $('#scrapingStatus').html('Biographie récupérée pour ' + championName + '.');
+                updateChampionList();  // Met à jour la liste des champions récupérés
+            }).fail(function() {
+                $('#scrapingStatus').html('Erreur lors de la récupération de la biographie.');
+            });
+        });
+
+        // Fonction pour lancer le scraping de tous les champions avec SSE
+        $('#launchScraper').on('click', function() {
+            $('#championList').html('');  // Vider la liste actuelle
+            $('#scrapingStatus').html('Lancement du scraping...');
+
+            var source = new EventSource('/progress');
+
+            source.onmessage = function(event) {
+                // Ajouter chaque champion récupéré à la liste
+                $('#championList').append('<li>' + event.data + '</li>');
+            };
+
+            source.onerror = function() {
+                $('#scrapingStatus').html('Scraping terminé.');
+                source.close();  // Fermer la connexion SSE
+            };
+        });
+
+        // Fonction pour mettre à jour la liste des champions récupérés
+        function updateChampionList() {
+            $.getJSON('/get_scraped_champions', function(data) {
+                $('#championList').empty();  // Vider la liste
+                $.each(data, function(index, champion) {
+                    $('#championList').append('<li>' + champion + '</li>');
+                });
+            });
+        }
+
+        // Mettre à jour la liste toutes les 5 secondes
+        setInterval(updateChampionList, 5000);
+    </script>
 </body>
 </html>
