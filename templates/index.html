@@ -9,12 +9,6 @@
 <body>
     <h1>League of Legends Biography Scraper</h1>
 
-    {# <form id="scrapeForm" method="POST">
-        <label for="name">Nom du Champion :</label>
-        <input type="text" id="name" name="name" required>
-        <button type="submit">Récupérer la biographie</button>
-    </form> #}
-
     <form action="/" method="post" id="scrapeForm">
         <label for="name">Nom du Champion :</label>
         <input type="text" name="name" id="name" placeholder="Nom du champion" required>
@@ -32,20 +26,28 @@
     <h2>Biographies récupérées :</h2>
     <ol id="championList"></ol>
 
+    <script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
     <script>
+        var app = document.getElementById('scrapingStatus');
+        var typewriter = new Typewriter(app, {
+            loop: false,
+            delay: 75,
+        });
+
+
         // Gestion de l'envoi du formulaire pour récupérer la biographie d'un seul champion
         $('#scrapeForm').on('submit', function(event) {
             event.preventDefault();  // Empêche le rechargement de la page
 
             var championName = $('#name').val();  // Récupère le nom du champion
-            $('#scrapingStatus').html('Récupération de la biographie pour ' + championName + '...');
+            typewriter.deleteAll().typeString('Récupération de la biographie pour ' + championName + '...').start();
 
             // Effectuer une requête AJAX pour récupérer la biographie
             $.post('/', { name: championName }, function(response) {
-                $('#scrapingStatus').html('Biographie récupérée pour ' + championName + '.');
+                typewriter.deleteAll().typeString('Biographie récupérée pour ' + championName + '.').start();
                 updateChampionList();  // Met à jour la liste des champions récupérés
             }).fail(function() {
-                $('#scrapingStatus').html('Erreur lors de la récupération de la biographie.');
+                typewriter.deleteAll().typeString('Erreur lors de la récupération de la biographie.').start();
             });
         });
 
