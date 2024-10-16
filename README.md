@@ -78,7 +78,7 @@ L'application sera accessible à l'adresse suivante : [http://127.0.0.1:5000/](h
 
 ### Étape 4 : Télécharger les biographies
 
-Lorsque les biographies sont récupérées avec succès, vous pouvez les télécharger en visitant cette URL : [http://127.0.0.1:5000/download](http://127.0.0.1:5000/download).
+Lorsque les biographies sont récupérées avec succès, vous pouvez les télécharger en visitant cette URL : [http://127.0.0.1:5000/download](http://127.0.0.1:5000/download) ou en appuyant sur le bouton download.
 
 ## Configuration avancée
 
