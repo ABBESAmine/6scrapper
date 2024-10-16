@@ -96,14 +96,6 @@ Si l'application ne parvient pas à récupérer la biographie d'un champion, un 
 
 ## Déploiement
 
-### Exécution en production
-
-Pour déployer cette application en production, il est recommandé d'utiliser un serveur d'applications comme **gunicorn** ou **uWSGI**, associé à un serveur web comme **nginx**. Voici un exemple de commande pour démarrer l'application avec **gunicorn** :
-
-```bash
-gunicorn -w 4 app:app
-```
-
 ### Hébergement sur GitHub Pages
 
 GitHub Pages ne prend pas en charge l'hébergement d'applications back-end comme Flask. Vous devrez donc déployer votre application sur une plateforme comme **Heroku**, **Render**, ou **Railway.app** si vous souhaitez l'héberger en ligne.
