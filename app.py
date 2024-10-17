@@ -8,8 +8,12 @@ from bs4 import BeautifulSoup
 import time
 import json
 import os
+import shutil
 
 app = Flask(__name__)
+
+app.run(debug=True)
+
 
 # Configuration de Selenium pour utiliser Chrome
 options = Options()
@@ -18,10 +22,16 @@ options.add_argument("--disable-gpu")
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
 options.add_argument("--window-size=1920x1080")
-options.binary_location = "/usr/bin/google-chrome"
 
 # Fonction pour initialiser le driver
 def init_driver():
+    # Utilise shutil.which pour obtenir le chemin de Chrome
+    chrome_binary_path = shutil.which("google-chrome")
+    if chrome_binary_path:
+        options.binary_location = chrome_binary_path
+    else:
+        raise Exception("Google Chrome n'est pas installé ou introuvable")
+    
     return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
 # Fonction commune pour scraper et stocker la biographie
