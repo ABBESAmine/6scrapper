@@ -67,6 +67,7 @@
         }
 
         ol {
+            width: 30%;
             background-color: #3e4451; /* Fond de la liste */
             color: #abb2bf; /* Couleur du texte */
             padding: 10px; /* Espacement interne */
@@ -109,6 +110,15 @@
             margin-top: 10px;
             margin-bottom: 10px;
         }
+
+        @media (max-width: 768px){
+            ol{
+                width: 100%;
+            }
+            #scrapingStatus{
+                width: 100%;
+            }
+        }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -132,12 +142,6 @@
 
     <h2>Biographies récupérées :</h2>
     <ol id="championList">
-        <li>smolder</li>
-        <li>smolder</li>
-        <li>smolder</li>
-        <li>smolder</li>
-        <li>smolder</li>
-        <li>smolder</li>
     </ol>
 
     <script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
