@@ -13,7 +13,8 @@ import shutil
 app = Flask(__name__)
 
 app.run(debug=True)
-
+port = int(os.environ.get('PORT', 5000))  # Utilise le port fourni par Render, ou 5000 par défaut
+app.run(host='0.0.0.0', port=port)
 
 # Configuration de Selenium pour utiliser Chrome
 options = Options()
