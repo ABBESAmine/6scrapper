@@ -8,13 +8,8 @@ from bs4 import BeautifulSoup
 import time
 import json
 import os
-import shutil
 
 app = Flask(__name__)
-
-app.run(debug=True)
-port = int(os.environ.get('PORT', 5000))  # Utilise le port fourni par Render, ou 5000 par défaut
-app.run(host='0.0.0.0', port=port)
 
 # Configuration de Selenium pour utiliser Chrome
 options = Options()
@@ -26,13 +21,6 @@ options.add_argument("--window-size=1920x1080")
 
 # Fonction pour initialiser le driver
 def init_driver():
-    # Utilise shutil.which pour obtenir le chemin de Chrome
-    chrome_binary_path = shutil.which("google-chrome")
-    if chrome_binary_path:
-        options.binary_location = chrome_binary_path
-    else:
-        raise Exception("Google Chrome n'est pas installé ou introuvable")
-    
     return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
 # Fonction commune pour scraper et stocker la biographie
