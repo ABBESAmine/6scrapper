@@ -54,7 +54,7 @@ Clonez ce dépôt GitHub sur votre machine locale :
 
 ```bash
 git clone https://github.com/ABBESAmine/6scrapper
-cd votre-depot
+cd 6scrapper
 ```
 
 
