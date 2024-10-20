@@ -11,8 +11,6 @@ import os
 
 app = Flask(__name__)
 
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
 
 
 # Configuration de Selenium pour utiliser Chrome
@@ -124,3 +122,6 @@ def download_file():
         return send_file("bio.json", as_attachment=True)
     return "Fichier non trouvé", 404
 
+
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0')
