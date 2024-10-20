@@ -27,25 +27,6 @@
 2024-10-20T10:14:28.715889+00:00 app[web.1]: raise exception_class(message, screen, stacktrace)
 2024-10-20T10:14:28.715889+00:00 app[web.1]: selenium.common.exceptions.WebDriverException: Message: unknown error: cannot find Chrome binary
 2024-10-20T10:14:28.715889+00:00 app[web.1]: Stacktrace:
-2024-10-20T10:14:28.715889+00:00 app[web.1]: #0 0x55b7859a24e3 <unknown>
-2024-10-20T10:14:28.715890+00:00 app[web.1]: #1 0x55b7856d1c76 <unknown>
-2024-10-20T10:14:28.715890+00:00 app[web.1]: #2 0x55b7856f8757 <unknown>
-2024-10-20T10:14:28.715890+00:00 app[web.1]: #3 0x55b7856f7029 <unknown>
-2024-10-20T10:14:28.715890+00:00 app[web.1]: #4 0x55b785735ccc <unknown>
-2024-10-20T10:14:28.715891+00:00 app[web.1]: #5 0x55b78573547f <unknown>
-2024-10-20T10:14:28.715891+00:00 app[web.1]: #6 0x55b78572cde3 <unknown>
-2024-10-20T10:14:28.715891+00:00 app[web.1]: #7 0x55b7857022dd <unknown>
-2024-10-20T10:14:28.715891+00:00 app[web.1]: #8 0x55b78570334e <unknown>
-2024-10-20T10:14:28.715892+00:00 app[web.1]: #9 0x55b7859623e4 <unknown>
-2024-10-20T10:14:28.715892+00:00 app[web.1]: #10 0x55b7859663d7 <unknown>
-2024-10-20T10:14:28.715892+00:00 app[web.1]: #11 0x55b785970b20 <unknown>
-2024-10-20T10:14:28.715892+00:00 app[web.1]: #12 0x55b785967023 <unknown>
-2024-10-20T10:14:28.715893+00:00 app[web.1]: #13 0x55b7859351aa <unknown>
-2024-10-20T10:14:28.715893+00:00 app[web.1]: #14 0x55b78598b6b8 <unknown>
-2024-10-20T10:14:28.715893+00:00 app[web.1]: #15 0x55b78598b847 <unknown>
-2024-10-20T10:14:28.715893+00:00 app[web.1]: #16 0x55b78599b243 <unknown>
-2024-10-20T10:14:28.715894+00:00 app[web.1]: #17 0x7f9d3df71ac3 <unknown>
-2024-10-20T10:14:28.715894+00:00 app[web.1]: 
 2024-10-20T10:14:28.716467+00:00 app[web.1]: 10.1.51.24 - - [20/Oct/2024:10:14:28 +0000] "GET / HTTP/1.1" 500 265 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
 2024-10-20T10:14:28.716774+00:00 heroku[router]: at=info method=GET path="/" host=young-retreat-25613-fc689ce72853.herokuapp.com request_id=a63f826a-cca3-413e-9f0d-9d8f8b13f35f fwd="91.160.80.175" dyno=web.1 connect=0ms service=264ms status=500 bytes=438 protocol=https
 2024-10-20T10:14:53.000000+00:00 app[api]: Build succeeded
@@ -77,24 +58,5 @@
 2024-10-20T10:15:02.496594+00:00 app[web.1]: raise exception_class(message, screen, stacktrace)
 2024-10-20T10:15:02.496594+00:00 app[web.1]: selenium.common.exceptions.WebDriverException: Message: unknown error: cannot find Chrome binary
 2024-10-20T10:15:02.496595+00:00 app[web.1]: Stacktrace:
-2024-10-20T10:15:02.496595+00:00 app[web.1]: #0 0x55e7528ad4e3 <unknown>
-2024-10-20T10:15:02.496596+00:00 app[web.1]: #1 0x55e7525dcc76 <unknown>
-2024-10-20T10:15:02.496596+00:00 app[web.1]: #2 0x55e752603757 <unknown>
-2024-10-20T10:15:02.496596+00:00 app[web.1]: #3 0x55e752602029 <unknown>
-2024-10-20T10:15:02.496596+00:00 app[web.1]: #4 0x55e752640ccc <unknown>
-2024-10-20T10:15:02.496597+00:00 app[web.1]: #5 0x55e75264047f <unknown>
-2024-10-20T10:15:02.496597+00:00 app[web.1]: #6 0x55e752637de3 <unknown>
-2024-10-20T10:15:02.496597+00:00 app[web.1]: #7 0x55e75260d2dd <unknown>
-2024-10-20T10:15:02.496597+00:00 app[web.1]: #8 0x55e75260e34e <unknown>
-2024-10-20T10:15:02.496598+00:00 app[web.1]: #9 0x55e75286d3e4 <unknown>
-2024-10-20T10:15:02.496598+00:00 app[web.1]: #10 0x55e7528713d7 <unknown>
-2024-10-20T10:15:02.496598+00:00 app[web.1]: #11 0x55e75287bb20 <unknown>
-2024-10-20T10:15:02.496598+00:00 app[web.1]: #12 0x55e752872023 <unknown>
-2024-10-20T10:15:02.496598+00:00 app[web.1]: #13 0x55e7528401aa <unknown>
-2024-10-20T10:15:02.496598+00:00 app[web.1]: #14 0x55e7528966b8 <unknown>
-2024-10-20T10:15:02.496599+00:00 app[web.1]: #15 0x55e752896847 <unknown>
-2024-10-20T10:15:02.496599+00:00 app[web.1]: #16 0x55e7528a6243 <unknown>
-2024-10-20T10:15:02.496599+00:00 app[web.1]: #17 0x7f635eec8ac3 <unknown>
-2024-10-20T10:15:02.496599+00:00 app[web.1]: 
 2024-10-20T10:15:02.496612+00:00 app[web.1]: 10.1.51.24 - - [20/Oct/2024:10:15:02 +0000] "GET / HTTP/1.1" 500 265 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
 2024-10-20T10:15:02.496688+00:00 heroku[router]: at=info method=GET path="/" host=young-retreat-25613-fc689ce72853.herokuapp.com request_id=0e351793-447c-4793-a0d2-08bc5f133546 fwd="91.160.80.175" dyno=web.1 connect=0ms service=439ms status=500 bytes=438 protocol=https
